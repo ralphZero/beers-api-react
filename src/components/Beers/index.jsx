@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import BeerItem from '../BeerItem.jsx';
 
-const Beers = () => {
-
-    const [beerList, setBeerList] = useState();
-    const [beerType, setBeerType] = useState('ale');
-    useEffect(() => {
-        fetch('https://api.sampleapis.com/beers/'+beerType) // ale , stouts
-        .then(response => response.json())
-        .then(beers => setBeerList(beers))
-        .catch(alert)
-    }, [beerType]);
+const Beers = ({ beerList }) => {
 
     if(!beerList) {
         return <h2>Loading...</h2>
     }
     return (
         <>
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card-group">
                 {
                     beerList.map(beer => (
-                        <li key={beer.id}>{beer.name}</li>
+                        <BeerItem key={beer.id} name={beer.name} image={beer.image} rating={beer.rating} price={beer.price} />
                     ))
                 }
             </div>
